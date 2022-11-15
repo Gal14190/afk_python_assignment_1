@@ -84,10 +84,14 @@ class Question3:
         self.movies = dict()    # global movives dict
 
         self.readMovies("movies.txt")
-        print(self.movies)
 
         self.playedWith('Anthony Hopkins')
-        pass
+
+        print(r"find - ^B")
+        self.find(r'^B')
+
+        print(r"find - \b\w{10}\b")
+        self.find(r'\b\w{10}\b')
 
     # read movives file method
     def readMovies(self, file_name):
@@ -119,7 +123,24 @@ class Question3:
         pass
 
     def find(self, pattern):
-        pass
+        print()
+        actorsSet = self.movies.keys()
+        moviesSet = self.movies.values()
+
+        print("actors")
+        for actor in actorsSet:
+            if re.search(pattern, actor):
+                print(actor)
+
+        duplicateSet = set()
+        print("movies")
+        for movies in moviesSet:
+            for m in movies:
+                if re.search(pattern, m) and m not in duplicateSet:
+                    duplicateSet.add(m)
+                    print(m)
+
+        print()
 
 # Main call Questions method
 if __name__ == "__main__":
