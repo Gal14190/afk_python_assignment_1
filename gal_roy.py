@@ -3,12 +3,36 @@
 ##
 # Create at 13/11/2022
 # Authors:  Gal Ashkenazi
-#           Roy Benjamin
+#           Roy Vaygue
 ##
 import re
 
 # Question 1 Starter
-def q1():
+def Question1():
+    ## a
+    # <flour> ::= 'F'
+    # <egg>   ::= 'E'
+    # <suger> ::= 'S'
+
+    # <pancake> ::= <egg>+ <pancake-parts> <sugar>?
+    # <pancake-parts> ::= (<flour> <egg> | <egg> <flour>) <pancake-parts>
+
+    # <crepe> ::= <eeg>+ <crepe-parts> <sugar>?
+    # <crepe-parts> ::= (<flour> <egg> <egg> | <egg> <egg> <flour> | <egg> <flour> <egg>) <crepe-parts>
+
+    ## b
+    # <flour> ::= 'F'
+    # <egg>   ::= 'E'
+    # <suger> ::= 'S'
+
+    # <pancake> ::= <egg>+ <pancake-parts> <sugar>?
+    # <pancake-parts> ::= (<flour> <egg> | <egg> <flour>) <pancake-parts>
+
+    # <crepe> ::= <eeg>+ <crepe-parts> <sugar>?
+    # <crepe-parts> ::= (<flour> <egg> <egg> | <egg> <egg> <flour> | <egg> <flour> <egg>) (IF TERM > 3 <crepe-parts> ELSE empty)
+
+    # x ::= 3
+    # TERM ::= x-1
     pass
 
 # Question 2
@@ -60,6 +84,10 @@ class Question3:
         self.movies = dict()    # global movives dict
 
         self.readMovies("movies.txt")
+        print(self.movies)
+
+        self.playedWith('Anthony Hopkins')
+        pass
 
     # read movives file method
     def readMovies(self, file_name):
