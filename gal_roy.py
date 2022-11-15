@@ -103,12 +103,12 @@ class Question3:
             key = ""
             value = ""
             
-            for n in line: # run over all words in the line
+            for i, n in enumerate(line): # run over all words in the line
                 if value != "": value += " "            # add space from the second word
                 value += re.search(r"[^,]*", n).group() # add words exept ',' char
 
                 # keep the key and movies if ',' char detact
-                if re.search(r"\,", n):
+                if re.search(r"\,", n) or i == len(line) - 1:
                     if key_flag:    
                         key = value
                         key_flag = False
@@ -120,18 +120,27 @@ class Question3:
             self.movies[key] = moviesSet        # add the actor and ther movies into the global dict
     
     def playedWith(self, actor):
-        pass
+        moviesPlayed = self.movies[actor]
+        for i in self.movies:
+            if i == actor:
+                pass
+            elif any((match := item) in self.movies[i] for item in moviesPlayed):
+               print(i,match)
 
+    # find method
     def find(self, pattern):
         print()
+        # get actors and movies 
         actorsSet = self.movies.keys()
         moviesSet = self.movies.values()
 
+        # print actors
         print("actors")
         for actor in actorsSet:
             if re.search(pattern, actor):
                 print(actor)
 
+        # print movies
         duplicateSet = set()
         print("movies")
         for movies in moviesSet:
