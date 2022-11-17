@@ -9,30 +9,26 @@ import re
 
 # Question 1 Starter
 def Question1():
-    ## a
-    # <flour> ::= 'F'
-    # <egg>   ::= 'E'
-    # <suger> ::= 'S'
+    print("Question 1 in comments")
+    ### a)
 
-    # <pancake> ::= <egg>+ <pancake-parts> <sugar>?
-    # <pancake-parts> ::= (<flour> <egg> | <egg> <flour>) <pancake-parts>
+    ##      <recipe> ::= <pancake> | <crepe> | <pancake>S | <crepe>S 
+    #
+    # <pancake>         ::= EF | E<pancake-parts>F | EF<pancake-parts> | <pancake>
+    # <pancake-parts>   ::= empty | EF | FE | E<pancake-parts>F | F<pancake-parts>E 
+    #
+    # <crepe>           ::= EEF | EFE | EE<crepe-parts>F | EF<crepe-parts>E | E<crepe-parts>EF | <crepe>
+    # <crepe-parts>     ::= empty | EEF| EFE| FEE | EE<crepe-parts>F | F<crepe-parts>EE | E<crepe-parts>FE | E<crepe-parts>EF | EF<crepe-parts>E
 
-    # <crepe> ::= <eeg>+ <crepe-parts> <sugar>?
-    # <crepe-parts> ::= (<flour> <egg> <egg> | <egg> <egg> <flour> | <egg> <flour> <egg>) <crepe-parts>
+    ### b)
 
-    ## b
-    # <flour> ::= 'F'
-    # <egg>   ::= 'E'
-    # <suger> ::= 'S'
-
-    # <pancake> ::= <egg>+ <pancake-parts> <sugar>?
-    # <pancake-parts> ::= (<flour> <egg> | <egg> <flour>) <pancake-parts>
-
-    # <crepe> ::= <eeg>+ <crepe-parts> <sugar>?
-    # <crepe-parts> ::= (<flour> <egg> <egg> | <egg> <egg> <flour> | <egg> <flour> <egg>) (IF TERM > 3 <crepe-parts> ELSE empty)
-
-    # x ::= 3
-    # TERM ::= x-1
+    ##      <recipe> ::= <pancake> | <crepe> | <pancake>S | <crepe>S 
+    #
+    # <pancake>         ::= EF | E<pancake-parts>F | EF<pancake-parts>
+    # <pancake-parts>   ::= empty | EF | FE | E<pancake-parts>F | F<pancake-parts>E 
+    #
+    # <crepe>           ::= EEF | EFE | EE<crepe-parts>F | EF<crepe-parts>E | E<crepe-parts>EF
+    # <crepe-parts>     ::= empty | EEF| EFE| FEE | EE<crepe-parts>F | F<crepe-parts>EE | E<crepe-parts>FE | E<crepe-parts>EF | EF<crepe-parts>E
     pass
 
 # Question 2
@@ -72,8 +68,21 @@ class Question2:
             if child not in visit:
                 self.DFS(graph, child, visit)
 
-    # BFS method
+    # TODO: BFS method
     def BFS(self, graph, node, visit):
+        # print(len(graph))
+        # visited = [False] * (len(graph) + 1)
+        # queue = []
+        # queue.append(node)
+        # visited[node] = True
+
+        # while queue:
+        #     node = queue.pop(0)
+        #     print(node, end=" ")
+        #     for i in graph[node]:
+        #         if visited[i] == False:
+        #             queue.append(i)
+        #             visited[i] = True
         pass
         
         
@@ -83,15 +92,24 @@ class Question3:
     def __init__(self):
         self.movies = dict()    # global movives dict
 
-        self.readMovies("movies.txt")
+        self.readMovies("movies.txt")       # read movies
 
-        self.playedWith('Anthony Hopkins')
+        print(r"@playedWith - Anthony Hopkins") 
+        print(
+            self.playedWith('Anthony Hopkins')  # play with Anthony Hopkins 
+          )  
 
-        print(r"find - ^B")
+        # find with ^B
+        print(r"@find - ^B") 
         self.find(r'^B')
 
-        print(r"find - \b\w{10}\b")
+        # find with \b\w{10}\b
+        print(r"@find - \b\w{10}\b")
         self.find(r'\b\w{10}\b')
+
+        # find ^(((\w)+?[ \t]){2}(\w)+)$
+        print(r"@find - ^(((\w)+?[ ]){2}(\w)+)$")
+        self.find(r'^(((\w)+[ ]+){2}(\w)+)$')
 
     # read movives file method
     def readMovies(self, file_name):
@@ -118,14 +136,19 @@ class Question3:
                     value = ""                  # reuse the value var
 
             self.movies[key] = moviesSet        # add the actor and ther movies into the global dict
-    
+
+    # play with method
     def playedWith(self, actor):
+        resList = list()
         moviesPlayed = self.movies[actor]
+
         for i in self.movies:
             if i == actor:
                 pass
             elif any((match := item) in self.movies[i] for item in moviesPlayed):
-               print(i,match)
+                resList.append((i, match))
+
+        return resList
 
     # find method
     def find(self, pattern):
@@ -154,7 +177,7 @@ class Question3:
 # Main call Questions method
 if __name__ == "__main__":
     print("---- Question 1 ----")
-    print("Question 1 in comments")
+    Question1()
 
     print("\n---- Question 2 ----\n")
     Question2('DFS') # strat question 2 - DFS
