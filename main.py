@@ -2,8 +2,8 @@
 # Assignment 1
 ##
 # Create at 13/11/2022
-# Authors:  Gal Ashkenazi
-#           Roy Vaygue
+# Authors:  Gal Ashkenazi   (315566752)
+#           Roy Vaygue      (318860848)
 ##
 import re
 
@@ -20,7 +20,7 @@ def Question1():
     # <crepe>           ::= EEF | EFE | EE<crepe-parts>F | EF<crepe-parts>E | E<crepe-parts>EF | <crepe>
     # <crepe-parts>     ::= empty | EEF| EFE| FEE | EE<crepe-parts>F | F<crepe-parts>EE | E<crepe-parts>FE | E<crepe-parts>EF | EF<crepe-parts>E
 
-    ### b)
+    ### b) Without the recursive
 
     ##      <recipe> ::= <pancake> | <crepe> | <pancake>S | <crepe>S 
     #
@@ -68,29 +68,27 @@ class Question2:
             if child not in visit:
                 self.DFS(graph, child, visit)
 
-    # TODO: BFS method
+    # BFS method
     def BFS(self, graph, node, visit):
-        # print(len(graph))
-        # visited = [False] * (len(graph) + 1)
-        # queue = []
-        # queue.append(node)
-        # visited[node] = True
+        queue = list()  # init queue to containe the child of node
 
-        # while queue:
-        #     node = queue.pop(0)
-        #     print(node, end=" ")
-        #     for i in graph[node]:
-        #         if visited[i] == False:
-        #             queue.append(i)
-        #             visited[i] = True
-        pass
+        visit.add(node)
+        queue.append(node)
+
+        while queue:          # check the queue until its empty
+            q = queue.pop()
+
+            for child in graph[q]:
+                if child not in visit:
+                    visit.add(child)
+                    queue.append(child)
         
         
 # Question 3
 class Question3:
     # Question 3 constartor
     def __init__(self):
-        self.movies = dict()    # global movives dict
+        self.movies = dict()    # movives dict
 
         self.readMovies("movies.txt")       # read movies
 
@@ -123,9 +121,9 @@ class Question3:
             
             for i, n in enumerate(line): # run over all words in the line
                 if value != "": value += " "            # add space from the second word
-                value += re.search(r"[^,]*", n).group() # add words exept ',' char
+                value += re.search(r"[^,]*", n).group() # add word exept ',' char
 
-                # keep the key and movies if ',' char detact
+                # keep the key and movies if ',' char detact and the last word (the last word is without ',' char)
                 if re.search(r"\,", n) or i == len(line) - 1:
                     if key_flag:    
                         key = value
@@ -135,18 +133,18 @@ class Question3:
 
                     value = ""                  # reuse the value var
 
-            self.movies[key] = moviesSet        # add the actor and ther movies into the global dict
+            self.movies[key] = moviesSet        # add the actor and their movies into the self dict
 
     # play with method
     def playedWith(self, actor):
         resList = list()
         moviesPlayed = self.movies[actor]
 
-        for i in self.movies:
-            if i == actor:
-                pass
-            elif any((match := item) in self.movies[i] for item in moviesPlayed):
-                resList.append((i, match))
+        for name in self.movies.keys():
+            if name == actor:
+                continue
+            elif any((match := item) in self.movies[name] for item in moviesPlayed):
+                resList.append((name, match))
 
         return resList
 
